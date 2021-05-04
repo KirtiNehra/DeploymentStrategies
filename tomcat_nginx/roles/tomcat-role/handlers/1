@@ -1,0 +1,8 @@
+---
+# handlers file for tomcat-role
+- name: restart tomcat
+  systemd:
+    name: tomcat
+    # enabled: true
+    state: "{{ tomcat_service }}"
+    daemon_reload: yes

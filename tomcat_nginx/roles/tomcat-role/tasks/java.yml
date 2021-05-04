@@ -1,0 +1,8 @@
+# tasks file for java
+---
+- name: install java on debian
+  apt:
+    name: "{{ java_version_debian }}"
+    state: present
+  when: ansible_os_family == "Debian"
+

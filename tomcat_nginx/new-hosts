@@ -1,0 +1,17 @@
+[web]
+172.31.29.11
+
+[db]
+172.31.33.230
+
+
+[web:vars]
+ansible_ssh_user=ubuntu
+
+[db:vars]
+ansible_ssh_user=ubuntu
+
+[test:children]
+web
+db
+
