@@ -1,0 +1,21 @@
+[Unit]
+Description=Apache Tomcat{{ tomcat_majorversion }}  
+After = syslog.target network.target
+
+[Service]
+LimitNOFILE=65000
+Type=forking
+
+User={{ tomcat_user }}
+Group={{ tomcat_group }}
+
+Environment="CATALINA_BASE={{ tomcat_directory }}/{{ tomcat_folder }}/apache-tomcat-{{ tomcat_version }}"
+Environment="CATALINA_HOME={{ tomcat_directory }}/{{ tomcat_folder }}/apache-tomcat-{{ tomcat_version }}"
+ExecStart={{ tomcat_directory }}/{{ tomcat_folder }}/apache-tomcat-{{ tomcat_version }}/bin/startup.sh
+ExecStop={{ tomcat_directory }}/{{ tomcat_folder }}/apache-tomcat-{{ tomcat_version }}/bin/shutdown.sh
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+

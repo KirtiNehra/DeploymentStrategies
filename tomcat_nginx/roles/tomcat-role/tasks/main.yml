@@ -1,0 +1,8 @@
+---
+- name: Including tasks for java
+  include_tasks: java.yml
+  when: java_required == "true"
+
+- name: Including tasks for tomcat
+  include_tasks: tomcat.yml
+  when: ansible_os_family == "Debian"

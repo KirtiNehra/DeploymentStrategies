@@ -1,0 +1,33 @@
+# tasks file for tomcat-role
+---
+- name: create group
+  group:
+    name: "{{ tomcat_group }}"
+    state: present
+- name: create user
+  user:
+    name: "{{ tomcat_user }}"
+    group: "{{ tomcat_group }}"
+    state: present
+- name: Creating directory
+  file:
+    path: "{{ tomcat_directory }}/{{ tomcat_folder }}"
+    state: directory
+    owner: "{{ tomcat_user }}"
+    group: "{{ tomcat_group }}"
+    mode: 0700
+- name: Download tomcat{{ tomcat_majorversion }}
+  unarchive:
+     src: https://downloads.apache.org/tomcat/tomcat-{{ tomcat_majorversion }}/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz
+     dest: "{{ tomcat_directory }}/{{ tomcat_folder }}"
+     remote_src: yes
+     owner: "{{ tomcat_user }}"
+
+- name: tomcat.service file
+  template:
+     src: tomcat.service.j2
+     dest: /etc/systemd/system/tomcat.service
+     mode: "0755"
+  notify:
+     - restart tomcat
+
